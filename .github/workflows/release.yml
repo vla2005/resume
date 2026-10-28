@@ -1,0 +1,38 @@
+name: Release Latest Resume
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish Latest Resume
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Publish or Update Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Latest Resume / Currículo Mais Recente"
+          body: |
+            Versão oficial e mais recente dos currículos em PDF de **Viktor Lacerda**.
+            
+            - 🇧🇷 [resume-pt.pdf](https://github.com/vla2005/resume/releases/download/latest/resume-pt.pdf) (Português)
+            - 🇺🇸 [resume-en.pdf](https://github.com/vla2005/resume/releases/download/latest/resume-en.pdf) (English)
+            
+            *Atualizado automaticamente via GitHub Actions.*
+          draft: false
+          prerelease: false
+          files: |
+            pdfs/resume-pt.pdf
+            pdfs/resume-en.pdf
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
